@@ -17,7 +17,7 @@ func NewProductRepository(connection *sql.DB) ProductRepository {
 var id int
 
 func (pr *ProductRepository) GetProducts() ([]models.Product, error) {
-	query := "SELECT id, product_name, price  FROM product"
+	query := "SELECT *  FROM product"
 	rows, err := pr.connection.Query(query)
 	if err != nil {
 		fmt.Println(err)
@@ -34,8 +34,9 @@ func (pr *ProductRepository) GetProducts() ([]models.Product, error) {
 			fmt.Println(err)
 			return []models.Product{}, err
 		}
+		productsList = append(productsList, productObj)
 	}
-	productsList = append(productsList, productObj)
+
 	rows.Close()
 	return productsList, nil
 }
